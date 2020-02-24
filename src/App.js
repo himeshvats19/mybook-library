@@ -9,9 +9,7 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route exact path="/" render={({ history }) => (
-          <ListBooks/>
-        )}></Route>
+        <Route exact path="/" component={ListBooks}></Route>
         <Route path="/search" component={SearchBook}></Route>
         
       </div>

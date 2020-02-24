@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import BookShelf from './Bookshelf'
 import * as BooksAPI from '../BooksAPI'
 
@@ -7,19 +8,20 @@ export default class ListBooks extends Component {
         books:[],
         currentlyReading: [],
         wantToRead: [],
-        read: []
+        read: [],
+        showLoader: false
     }
     componentDidMount(){
+        this.setState({ showLoader: true });
         BooksAPI.getAll().then((books) => {
           const currentlyReading = books.filter( book => {
             return book.shelf === "currentlyReading"
-                ;
-          });
+          })
           const wantToRead = books.filter( book => {
-              return book.shelf === "wantToRead";
-          });
+              return book.shelf === "wantToRead"
+          })
           const read = books.filter( book => {
-              return book.shelf === "read";
+              return book.shelf === "read"
           });
           this.setState({
             books,
@@ -27,27 +29,29 @@ export default class ListBooks extends Component {
             wantToRead,
             read
           })
+        this.setState({ showLoader: false })
         })
     }
 
     getBookFromId = (bookIdToParse) => {
         return this.state.books.filter(book => {
             return bookIdToParse.some((id) => {
-                return book.id === id;
-            });
+                return book.id === id
+            })
         })
     }
     
-
     updateShelf = (shelf, book) => {
+        this.setState({ showLoader: true })
         BooksAPI.update(book, shelf).then((bookIds) => {
-            const { currentlyReading, wantToRead, read } = bookIds;
+            const { currentlyReading, wantToRead, read } = bookIds
             this.setState({
                 currentlyReading : this.getBookFromId(currentlyReading),
                 wantToRead : this.getBookFromId(wantToRead),
-                read : this.getBookFromId(read)
+                read : this.getBookFromId(read),
+                showLoader: false
               })
-          });
+          })
     }
 
     render() {
@@ -55,6 +59,11 @@ export default class ListBooks extends Component {
             <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
+              {this.state.showLoader && (
+                    <div className="spinner-wrap">
+                        <div className="spinner"></div>
+                    </div>)
+                }
             </div>
             <div className="list-books-content">
               <div>
@@ -73,7 +82,12 @@ export default class ListBooks extends Component {
               </div>
             </div>
             <div className="open-search">
-              <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+                <Link to={{
+                    pathname: '/search',
+                    state: {savedBooks: this.state.books}
+                }}>
+                    <button>Add a Book</button>
+                </Link>
             </div>
           </div>
         )
