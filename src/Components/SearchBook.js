@@ -3,17 +3,20 @@ import { Link } from 'react-router-dom'
 import * as BooksAPI from '../BooksAPI'
 import BookShelf from './Bookshelf'
 
+import {DebounceInput} from 'react-debounce-input';
+
 export default class SearchBook extends Component {
   constructor(){
     super();
     this.state = {
-      query:'',
-      books:[]
+      query: '',
+      books: []
     }
   }
   parseBooksForShelf = (books) => {
     const { savedBooks } = this.props.location.state;
       books.forEach((book) => {
+      book.shelf = 'none'  
       savedBooks.forEach((savedBook) => {
         if(book.id === savedBook.id){
           book.shelf = savedBook.shelf;
@@ -34,7 +37,7 @@ export default class SearchBook extends Component {
       });
     }
     this.setState({
-      books:[]
+      books: []
     });
   }
 
@@ -49,10 +52,12 @@ export default class SearchBook extends Component {
               <button className="close-search">Close</button>
               </Link>
               <div className="search-books-input-wrapper">
-                <input  
+                  <DebounceInput
                   type="text" 
                   placeholder="Search by title or author" 
-                  onChange={(event) => this.searchQuery(event.target.value)}/>
+                  minLength={1}
+                  debounceTimeout={300}
+                  onChange={event => this.searchQuery(event.target.value)} />
               </div>
             </div>
             { this.state.books.length > 0 && (

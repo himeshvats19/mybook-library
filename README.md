@@ -2,7 +2,15 @@
 
 Updacity : MyReads - A Book Lending App
 
-## TL;DR
+This ReactJS App provides the User to categorize Books into thre different categories as "Continue Reading", "Want To Read" & "Read".
+The User can also search the books from the Search page and add to any of the above categories.
+
+## Technical Stack
+JS Library - React
+Routing - React Router Dom
+Type Checking - PropTypes
+Dependency Management - NPM
+
 
 To get started:
 
