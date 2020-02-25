@@ -6,6 +6,7 @@ This ReactJS App provides the User to categorize Books into thre different categ
 * "Continue Reading"
 * "Want To Read"
 * "Read".
+
 The User can also search the books from the Search page and add to any of the above categories.
 
 ## Technical Stack
