@@ -1,6 +1,6 @@
 # MyBook Library
 
-Updacity : MyReads - A Book Lending App
+MyReads - A Book Lending App
 
 This ReactJS App provides the User to categorize Books into thre different categories as 
 * "Continue Reading"
