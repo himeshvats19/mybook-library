@@ -1,4 +1,4 @@
-# MyReads Project
+# MyBook Library
 
 Updacity : MyReads - A Book Lending App
 
